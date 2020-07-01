@@ -21,6 +21,7 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -313,7 +314,8 @@ public class UserController implements Initializable {
 					String formattedWind = flight.getWindSpeed() +" "+ currentTeam.getSpeedUnits() +" "+ flight.getWindDirection();
 					String formattedTemperature = flight.getTemperature() + " " + currentTeam.getTemperatureUnits();
 					String formattedHumidity = flight.getHumidity() + "%";
-					flightsLog.add(new FlightProperty(Integer.toString(flight.getFlightID()),flight.getLocation(), formattedAltitude, formattedTime, flight.getStability(), flight.getNotes(), flight.getFlightDate().toString(), formattedWind, formattedTemperature ,formattedHumidity));
+					DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");  
+					flightsLog.add(new FlightProperty(Integer.toString(flight.getFlightID()),flight.getLocation(), formattedAltitude, formattedTime, flight.getStability(), flight.getNotes(), dateFormat.format(flight.getFlightDate()), formattedWind, formattedTemperature ,formattedHumidity));
 				}
 				flightLogTable.getItems().addAll(flightsLog);
 		}
@@ -356,7 +358,7 @@ public class UserController implements Initializable {
 		Flight newFlight = new Flight();
 		
 		try {
-			newFlight.setFlightDate(new SimpleDateFormat("MM/dd/yyyy").parse(newFlightDate.getText()));
+			newFlight.setFlightDate(new SimpleDateFormat("mm/dd/yyyy").parse(newFlightDate.getText()));
 			newFlight.setAltitude(Integer.parseInt(newAltitude.getText()));
 			newFlight.setTime(Double.parseDouble(newTime.getText()));
 			newFlight.setWindSpeed(Integer.parseInt(newWindSpeed.getText()));
@@ -369,6 +371,7 @@ public class UserController implements Initializable {
 			newFlight.setNotes(newNotes.getText());
 		}
 		catch(ParseException | NumberFormatException | NullPointerException e) {
+			System.out.println(e.toString());
 			addFlightlbl.setText("Field not properly formatted");
 			return false;
 		}
@@ -400,7 +403,7 @@ public class UserController implements Initializable {
 			
 		try{
 			FlightProperty selectedFlight = (FlightProperty) flightLogTable.getSelectionModel().getSelectedItem();
-			//newFlightDate.setText(selectedFlight.getFlightDate());
+			newFlightDate.setText(selectedFlight.getFlightDate());
 			newLocation.setText(selectedFlight.getLocation());
 			newAltitude.setText(Integer.toString(FlightProperty.extractIntegers(selectedFlight.getAltitude())));
 			newTime.setText(Double.toString(FlightProperty.extractDoubles(selectedFlight.getTime())));
