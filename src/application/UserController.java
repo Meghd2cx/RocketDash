@@ -307,7 +307,7 @@ public class UserController implements Initializable {
 			//Notes: the try section fails if the constructor takes a flight which has a field that is empty
 			//TODO Improvements: Have way of allowing user to not completely fill out all fields to insert into the table
 			ArrayList<FlightProperty> flightsLog = new ArrayList<FlightProperty>();
-				for(Flight flight: currentRocket.getFlights()) {
+				for(Flight flight: currentRocket.getFlights()) {	
 					
 					String formattedTime = flight.getTime() + " sec(s)";
 					String formattedAltitude = flight.getAltitude() + " ft";
@@ -315,6 +315,7 @@ public class UserController implements Initializable {
 					String formattedTemperature = flight.getTemperature() + " " + currentTeam.getTemperatureUnits();
 					String formattedHumidity = flight.getHumidity() + "%";
 					DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");  
+					
 					flightsLog.add(new FlightProperty(Integer.toString(flight.getFlightID()),flight.getLocation(), formattedAltitude, formattedTime, flight.getStability(), flight.getNotes(), dateFormat.format(flight.getFlightDate()), formattedWind, formattedTemperature ,formattedHumidity));
 				}
 				flightLogTable.getItems().addAll(flightsLog);
@@ -358,7 +359,7 @@ public class UserController implements Initializable {
 		Flight newFlight = new Flight();
 		
 		try {
-			newFlight.setFlightDate(new SimpleDateFormat("mm/dd/yyyy").parse(newFlightDate.getText()));
+			newFlight.setFlightDate(new SimpleDateFormat("MM/dd/yyyy").parse(newFlightDate.getText()));
 			newFlight.setAltitude(Integer.parseInt(newAltitude.getText()));
 			newFlight.setTime(Double.parseDouble(newTime.getText()));
 			newFlight.setWindSpeed(Integer.parseInt(newWindSpeed.getText()));
