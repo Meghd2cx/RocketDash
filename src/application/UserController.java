@@ -314,7 +314,7 @@ public class UserController implements Initializable {
 					String formattedWind = flight.getWindSpeed() +" "+ currentTeam.getSpeedUnits() +" "+ flight.getWindDirection();
 					String formattedTemperature = flight.getTemperature() + " " + currentTeam.getTemperatureUnits();
 					String formattedHumidity = flight.getHumidity() + "%";
-					DateFormat dateFormat = new SimpleDateFormat("mm/dd/yyyy");  
+					DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");  
 					flightsLog.add(new FlightProperty(Integer.toString(flight.getFlightID()),flight.getLocation(), formattedAltitude, formattedTime, flight.getStability(), flight.getNotes(), dateFormat.format(flight.getFlightDate()), formattedWind, formattedTemperature ,formattedHumidity));
 				}
 				flightLogTable.getItems().addAll(flightsLog);
